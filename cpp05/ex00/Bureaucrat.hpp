@@ -5,16 +5,22 @@
 
 class Bureaucrat
 {
-	Bureaucrat(void);
-	Bureaucrat(std::string name);
-	Bureaucrat(Bureaucrat const &copy);
-	~Bureaucrat(void);
+	public:
 
-	void	getName(void);
-	void	getGrade(void);
+		Bureaucrat(void);
+		Bureaucrat(std::string name);
+		Bureaucrat(Bureaucrat const &copy);
+		~Bureaucrat(void);
 
-	const std::string	_name;
-	int					_grade;
+		Bureaucrat &operator=(Bureaucrat const &rsh);
+
+		std::string	getName(void) const;
+		int			getGrade(void) const;
+
+	private:
+
+		const std::string	_name;
+		int					_grade;
 };
 
 #endif

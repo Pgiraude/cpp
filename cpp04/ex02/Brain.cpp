@@ -36,4 +36,3 @@ Brain   &Brain::operator=(Brain const &rhs)
     }
     return (*this);
 }
-
