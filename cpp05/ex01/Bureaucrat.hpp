@@ -2,6 +2,15 @@
 # define BUREAUCRAT_HPP
 
 # include <iostream>
+# include "Form.hpp"
+
+# define RESET	"\e[0m"
+# define RED	"\e[31m"
+# define GREEN	"\e[32m"
+# define YELLOW	"\e[33m"
+# define BLUE	"\e[34m"
+# define PURPLE	"\e[35m"
+# define CYAN	"\e[36m"
 
 class Bureaucrat
 {
@@ -20,12 +29,14 @@ class Bureaucrat
 		void	incrementGrade(void);
 		void	decrementGrade(void);
 
+		void	signForm(Form &form);
+
 		class	GradeTooHighException : public std::exception
 		{
 			public:
 				virtual const char *what() const throw()
 				{
-					return ("Grade is too high!!");
+					return (RED "grade is too high!!" RESET);
 				}
 		};
 
@@ -34,7 +45,7 @@ class Bureaucrat
 			public:
 				virtual const char *what() const throw()
 				{
-					return ("Grade is too low!!");
+					return (RED "grade is too low!!" RESET);
 				}
 		};
 
