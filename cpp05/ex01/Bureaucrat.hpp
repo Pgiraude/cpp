@@ -12,6 +12,9 @@
 # define PURPLE	"\e[35m"
 # define CYAN	"\e[36m"
 
+
+class Form;
+
 class Bureaucrat
 {
 	public:
@@ -30,6 +33,7 @@ class Bureaucrat
 		void	decrementGrade(void);
 
 		void	signForm(Form &form);
+		void	execForm(Form &form);
 
 		class	GradeTooHighException : public std::exception
 		{

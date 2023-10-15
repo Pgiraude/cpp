@@ -2,6 +2,7 @@
 # define FORM_HPP
 
 # include <iostream>
+# include "Bureaucrat.hpp"
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -10,6 +11,8 @@
 # define BLUE	"\e[34m"
 # define PURPLE	"\e[35m"
 # define CYAN	"\e[36m"
+
+class Bureaucrat;
 
 class Form
 {
@@ -25,7 +28,7 @@ class Form
 		int			getExecGrade(void) const;
 		bool		getSignature(void) const;
 
-		void        setSigned(void);
+		void        beSigned(Bureaucrat const &worker);
 
 	private:
 		const std::string	_name;

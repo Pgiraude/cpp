@@ -93,14 +93,31 @@ void	Bureaucrat::signForm(Form &form)
 {
 	try
 	{
-		if (form.getSignGrade() < _grade)
+		form.beSigned(*this);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << RED "BUREAUCRAT " << _name << RESET " couldn't signed" << BLUE " FORM " << form.getName() << RESET " because " << e.what() << '\n';
+	}
+}
+
+void	Bureaucrat::execForm(Form &form)
+{
+	try
+	{
+		if (form.getExecGrade() < _grade)
 			throw (Bureaucrat::GradeToolowException());
 		else if (_grade >= 1)
-			form.setSigned();
+		{
+			std::cout << RED "BUREAUCRAT " << _name << RESET << " of grade " << RED << _grade << RESET;
+			std::cout << " execute succesfuly the " << BLUE "FORM " << form.getName() << RESET << " of execute grade ";
+			std::cout << BLUE << form.getExecGrade() << RESET << std::endl;
+		}
+
 	}
 	catch(Bureaucrat::GradeToolowException &e)
 	{
-		std::cerr << RED "BURAUCRAT " << _name << RESET " couldn't signed" << BLUE " FORM " << form.getName() << RESET " because " << e.what() << '\n';
+		std::cerr << RED "BUREAUCRAT " << _name << RESET " couldn't execute" << BLUE " FORM " << form.getName() << RESET " because " << e.what() << '\n';
 	}
 }
 

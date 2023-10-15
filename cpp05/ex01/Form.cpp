@@ -63,9 +63,21 @@ bool		Form::getSignature(void) const
     return (this->_signature);
 }
 
-void        Form::setSigned(void)
+void        Form::beSigned(Bureaucrat const &worker)
 {
-    this->_signature = 1;
+    if (_sign_grade < worker.getGrade())
+		throw (Form::GradeToolowException());
+	else if (worker.getGrade() >= 1 && _signature == 1)
+    {
+		std::cout << RED "Buraucrat " << worker.getName() << RESET " could sign the "<< BLUE "FORM " << _name << RESET;
+        std::cout << " but was already signed" << std::endl;
+    }
+    else if (worker.getGrade() >= 1 && _signature == 0)
+    {
+        std::cout << RED "Buraucrat " << worker.getName() << RESET " have succesfuly sign "<< BLUE "FORM " << _name << RESET;
+        std::cout << std::endl;
+        this->_signature = 1;
+    }
 }
 
 std::ostream    &operator<<(std::ostream &out, const Form &i)
