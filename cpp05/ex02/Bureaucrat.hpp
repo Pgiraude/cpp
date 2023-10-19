@@ -2,7 +2,7 @@
 # define BUREAUCRAT_HPP
 
 # include <iostream>
-# include "Form.hpp"
+# include "AForm.hpp"
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -32,8 +32,8 @@ class Bureaucrat
 		void	incrementGrade(void);
 		void	decrementGrade(void);
 
-		void	signForm(Form &form);
-		void	execForm(Form &form);
+		void	signForm(AForm &form);
+		void	executeForm(AForm const &form);
 
 		class	GradeTooHighException : public std::exception
 		{

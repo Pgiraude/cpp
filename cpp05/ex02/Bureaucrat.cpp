@@ -89,7 +89,7 @@ void	Bureaucrat::decrementGrade(void)
 	std::cout << "Bureaucrat " << this->getName() << " is down to grade " << this->getGrade() << " now" << std::endl;
 }
 
-void	Bureaucrat::signForm(Form &form)
+void	Bureaucrat::signForm(AForm &form)
 {
 	try
 	{
@@ -101,18 +101,16 @@ void	Bureaucrat::signForm(Form &form)
 	}
 }
 
-void	Bureaucrat::execForm(Form &form)
+void	Bureaucrat::executeForm(AForm const &form)
 {
 	try
 	{
-		if (form.getExecGrade() < _grade)
-			throw (Bureaucrat::GradeToolowException());
-		else if (_grade >= 1)
-		{
-			std::cout << RED "BUREAUCRAT " << _name << RESET << " of grade " << RED << _grade << RESET;
-			std::cout << " execute succesfuly the " << BLUE "FORM " << form.getName() << RESET << " of execute grade ";
-			std::cout << BLUE << form.getExecGrade() << RESET << std::endl;
-		}
+		form.execute(*this);
+		
+		// std::cout << RED "BUREAUCRAT " << _name << RESET << " of grade " << RED << _grade << RESET;
+		// std::cout << " execute succesfuly the " << BLUE "FORM " << form.getName() << RESET << " of execute grade ";
+		// std::cout << BLUE << form.getExecGrade() << RESET << std::endl;
+		
 
 	}
 	catch(Bureaucrat::GradeToolowException &e)

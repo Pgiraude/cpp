@@ -1,5 +1,5 @@
-#ifndef AForm_HPP
-# define AForm_HPP
+#ifndef AFORM_HPP
+# define AFORM_HPP
 
 # include <iostream>
 # include "Bureaucrat.hpp"
@@ -20,7 +20,7 @@ class AForm
 		AForm(void);
 		AForm(std::string name, int sign_grade, int exec_grade);
 		AForm(AForm const &copy);
-		~AForm(void);
+		virtual ~AForm(void) = 0;
 		AForm &operator=(AForm const &rhs);
 
 		std::string	getName(void) const;
