@@ -3,6 +3,9 @@
 
 # include <iostream>
 # include "AForm.hpp"
+# include "RobotomyRequestForm.hpp"
+# include "PresidentialPardonForm.hpp"
+# include "ShrubberryCreationForm.hpp"
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"

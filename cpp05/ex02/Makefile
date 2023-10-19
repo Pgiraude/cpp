@@ -6,9 +6,11 @@ RM = rm -f
 
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = Bureaucrat.cpp main.cpp Form.cpp
+SRC = Bureaucrat.cpp main.cpp AForm.cpp PresidentialPardonForm.cpp \
+		RobotomyRequestForm.cpp ShrubberryCreationForm.cpp
 
-HEADER = Bureaucrat.hpp Form.hpp
+HEADER = Bureaucrat.hpp AForm.hpp PresidentialPardonForm.hpp \
+		RobotomyRequestForm.hpp ShrubberryCreationForm.hpp
 
 OBJS = $(SRC:.cpp=.o)
 

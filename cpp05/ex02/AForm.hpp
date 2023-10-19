@@ -30,6 +30,8 @@ class AForm
 
 		void        beSigned(Bureaucrat const &worker);
 
+        virtual void    execute(Bureaucrat const & executor) const;
+
 	private:
 		const std::string	_name;
 		bool				_signature;
