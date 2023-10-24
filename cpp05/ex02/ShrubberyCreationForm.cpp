@@ -39,19 +39,21 @@ std::string	ShrubberyCreationForm::getTarget(void) const
 
 void    ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
+    std::cout << RED "Bureaucrat " << executor.getName() << YELLOW " try to execute " BLUE << getName() << RESET <<std::endl;
     if (executor.getGrade() <= getExecGrade() && executor.getGrade() >= 1)
     {
-        std::string name_file = this->_target + "_shrubbery";
-        std::ofstream file(name_file.c_str());
-        file << "   @@" << std::endl;
-        file << "  @@@@" << std::endl;
-        file << " @@@@@@" << std::endl;
-        file << " @@@@@@" << std::endl;
-        file << "  @@@@" << std::endl;
-        file << " @ ||" << std::endl;
-        file << "  \\||" << std::endl;
-        file << " -----" << std::endl;
-        std::cout << this->_target << " has create an ASCII tree" << std::endl;
+        std::string     name_file = this->_target + "_shrubbery";
+        std::ofstream   the_file(name_file.c_str());
+        the_file << "   @@" << std::endl;
+        the_file << "  @@@@" << std::endl;
+        the_file << " @@@@@@" << std::endl;
+        the_file << " @@@@@@" << std::endl;
+        the_file << "  @@@@" << std::endl;
+        the_file << " @ ||" << std::endl;
+        the_file << "  \\||" << std::endl;
+        the_file << " -----" << std::endl;
+        the_file.close();
+        std::cout << GREEN << this->_target << " has create an ASCII tree" << RESET << std::endl;
 
     }
     else

@@ -106,9 +106,6 @@ void	Bureaucrat::executeForm(AForm const &form)
 	try
 	{
 		form.execute(*this);
-		// std::cout << RED "BUREAUCRAT " << _name << RESET << " of grade " << RED << _grade << RESET;
-		// std::cout << " execute succesfuly the " << BLUE "FORM " << form.getName() << RESET << " of execute grade ";
-		// std::cout << BLUE << form.getExecGrade() << RESET << std::endl;
 	}
 	catch(Bureaucrat::GradeToolowException &e)
 	{

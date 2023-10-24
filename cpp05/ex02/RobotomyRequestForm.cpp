@@ -38,17 +38,18 @@ std::string	RobotomyRequestForm::getTarget(void) const
 
 void    RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
+    std::cout << RED "Bureaucrat " << executor.getName() << YELLOW " try to execute " BLUE << getName() << RESET <<std::endl;
     if (executor.getGrade() <= getExecGrade() && executor.getGrade() >= 1)
     {
-        std::cout << "Drrrrriiiiiiillllllll!!" << std::endl;
-        if (rand() % 2)
-            std::cout << this->_target << " has been robotomized successfully" << std::endl;
+        std::cout << YELLOW "Drrrrriiiiiiillllllll!!" RESET << std::endl;
+        srand(time(NULL));
+        if ((rand() % 2) == 0)
+            std::cout << GREEN << this->_target << " has been robotomized successfully" RESET << std::endl;
         else
-            std::cout << this->_target << " robotomy failed" << std::endl;
+            std::cout << RED << this->_target << " robotomy failed" RESET << std::endl;
     }
     else
         throw (Bureaucrat::GradeToolowException());
-		
 }
 
 std::ostream	&operator<<(std::ostream &out, const RobotomyRequestForm &i)

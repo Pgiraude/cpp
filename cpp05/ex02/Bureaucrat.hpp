@@ -3,9 +3,6 @@
 
 # include <iostream>
 # include "AForm.hpp"
-# include "RobotomyRequestForm.hpp"
-# include "PresidentialPardonForm.hpp"
-# include "ShrubberryCreationForm.hpp"
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -16,7 +13,7 @@
 # define CYAN	"\e[36m"
 
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -43,7 +40,7 @@ class Bureaucrat
 			public:
 				virtual const char *what() const throw()
 				{
-					return (RED "grade is too high!!" RESET);
+					return (RED "Bureaucrat grade is too high!!" RESET);
 				}
 		};
 
@@ -52,7 +49,7 @@ class Bureaucrat
 			public:
 				virtual const char *what() const throw()
 				{
-					return (RED "grade is too low!!" RESET);
+					return (RED "Bureaucrat grade is too low!!" RESET);
 				}
 		};
 

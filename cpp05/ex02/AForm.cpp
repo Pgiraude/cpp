@@ -17,15 +17,15 @@ AForm::AForm(std::string name, int sign_grade, int exec_grade) : _name(name), _s
     try
     {
         if (_sign_grade < 1)
-            throw (AForm::GradeTooHighException());
+            throw (AForm::SignGradeTooHighException());
         if (_sign_grade > 150)
-            throw (AForm::GradeToolowException());
+            throw (AForm::SignGradeToolowException());
+        if (_exec_grade < 1)
+            throw (AForm::ExecGradeTooHighException());
+        if (_exec_grade > 150)
+            throw (AForm::ExecGradeToolowException());
     }
-    catch(AForm::GradeTooHighException &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-    catch(AForm::GradeToolowException &e)
+    catch(std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
@@ -65,16 +65,17 @@ bool		AForm::getSignature(void) const
 
 void        AForm::beSigned(Bureaucrat const &worker)
 {
+    std::cout << RED "Bureaucrat " << worker.getName() << YELLOW " try to sign " BLUE << getName() << RESET <<std::endl;
     if (_sign_grade < worker.getGrade())
-		throw (AForm::GradeToolowException());
+		throw (Bureaucrat::GradeToolowException());
 	else if (worker.getGrade() >= 1 && _signature == 1)
     {
-		std::cout << RED "Buraucrat " << worker.getName() << RESET " could sign the "<< BLUE "AForm " << _name << RESET;
-        std::cout << " but was already signed" << std::endl;
+		std::cout << RED "Bureaucrat " << worker.getName() << GREEN " could sign the " << BLUE "AForm " << _name << RESET;
+        std::cout << GREEN " but was already signed" RESET << std::endl;
     }
     else if (worker.getGrade() >= 1 && _signature == 0)
     {
-        std::cout << RED "Buraucrat " << worker.getName() << RESET " have succesfuly sign "<< BLUE "AForm " << _name << RESET;
+        std::cout << GREEN "Bureaucrat " << worker.getName() << " have succesfuly sign AForm " << _name << RESET;
         std::cout << std::endl;
         this->_signature = 1;
     }

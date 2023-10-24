@@ -38,11 +38,11 @@ std::string	PresidentialPardonForm::getTarget(void) const
 
 void    PresidentialPardonForm::execute(Bureaucrat const &executor) const
 {
+    std::cout << RED "Bureaucrat " << executor.getName() << YELLOW " try to execute " BLUE << getName() << RESET <<std::endl;
     if (executor.getGrade() <= getExecGrade() && executor.getGrade() >= 1)
-        std::cout << this->_target << " has been pardoned by Zaphod Beeblebrox" << std::endl;
+        std::cout << GREEN << this->_target << " has been pardoned by Zaphod Beeblebrox" << RESET << std::endl;
     else
         throw (Bureaucrat::GradeToolowException());
-		
 }
 
 std::ostream	&operator<<(std::ostream &out, const PresidentialPardonForm &i)

@@ -1,8 +1,8 @@
 #ifndef PRESIDENTIALPARDONFORM_HPP
 # define PRESIDENTIALPARDONFORM_HPP
 
-#include "AForm.hpp"
-#include <iostream>
+# include "AForm.hpp"
+# include <iostream>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -11,6 +11,7 @@
 # define BLUE	"\e[34m"
 # define PURPLE	"\e[35m"
 # define CYAN	"\e[36m"
+
 
 class PresidentialPardonForm : public AForm
 {

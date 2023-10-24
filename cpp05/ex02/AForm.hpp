@@ -30,7 +30,44 @@ class AForm
 
 		void        beSigned(Bureaucrat const &worker);
 
-        virtual void    execute(Bureaucrat const & executor) const;
+        virtual void    execute(Bureaucrat const & executor) const = 0;
+
+
+		class	SignGradeTooHighException : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (BLUE "sign FORM grade is too high!!" RESET);
+				}
+		};
+
+		class	SignGradeToolowException : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (BLUE "sign FORM grade is too low!!" RESET);
+				}
+		};
+
+		class	ExecGradeTooHighException : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (BLUE "exec FORM grade is too high!!" RESET);
+				}
+		};
+
+		class	ExecGradeToolowException : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (BLUE "exec FORM grade is too low!!" RESET);
+				}
+		};
 
 	private:
 		const std::string	_name;
@@ -38,24 +75,6 @@ class AForm
 		const int			_sign_grade;
 		const int			_exec_grade;
 
-
-		class	GradeTooHighException : public std::exception
-		{
-			public:
-				virtual const char *what() const throw()
-				{
-					return (BLUE "grade is too high!!" RESET);
-				}
-		};
-
-		class	GradeToolowException : public std::exception
-		{
-			public:
-				virtual const char *what() const throw()
-				{
-					return (BLUE "grade is too low!!" RESET);
-				}
-		};
 
 };
 
