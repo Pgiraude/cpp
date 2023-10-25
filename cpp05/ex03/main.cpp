@@ -2,69 +2,46 @@
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
 int main(void)
 {
-	std::cout << "-----------test n1 success execut------------" <<std::endl;
+	std::cout << "-----------test n1 success intern------------" <<std::endl;
 	{
-		Bureaucrat A("Jean", 1);
-		RobotomyRequestForm B("Dylan");
-		ShrubberyCreationForm C("Logan");
-		PresidentialPardonForm D("Mulan");
-		std::cout << "----------------" << std::endl;
-		A.executeForm(B);
-		A.executeForm(C);
-		A.executeForm(D);
-		std::cout << "----------------" << std::endl;
+		Intern A;
+		AForm* rrf;
 
+		std::cout << "----------------" << std::endl;
+		rrf = A.makeForm("robotomy request", "Dylan");
+		std::cout << "----------------" << std::endl;
+		(void)rrf;
+		delete rrf;
 	}
-	std::cout << "-----------test n2 grade too low to execute------------" <<std::endl << std::endl;
+	std::cout << "-----------test n2 failed intern------------" <<std::endl << std::endl;
 	{
-		Bureaucrat A("Jean", 150);
-		RobotomyRequestForm B("Dylan");
-		ShrubberyCreationForm C("Logan");
-		PresidentialPardonForm D("Mulan");
+		Intern A;
+		AForm* rrf;
+
 		std::cout << "----------------" << std::endl;
-		A.executeForm(B);
-		A.executeForm(C);
-		A.executeForm(D);
+		rrf = A.makeForm("random form", "Dylan");
 		std::cout << "----------------" << std::endl;
+		(void)rrf;
 	}
-	std::cout << "-----------test n3 could sign x2------------" << std::endl << std::endl;
+	std::cout << "-----------test n3 create form and use it------------" << std::endl << std::endl;
 	{
-		Bureaucrat A("Arthur", 1);
-		RobotomyRequestForm B("Dylan");
-		ShrubberyCreationForm C("Logan");
-		PresidentialPardonForm D("Mulan");
+		Intern A;
+		AForm* rrf;
+
 		std::cout << "----------------" << std::endl;
-		A.signForm(B);
-		A.signForm(C);
-		A.signForm(D);
+		rrf = A.makeForm("presidential pardon", "Dylan");
 		std::cout << "----------------" << std::endl;
-		A.signForm(B);
-		A.signForm(C);
-		A.signForm(D);
+		Bureaucrat B("Paul", 1);
+		B.signForm(*rrf);
 		std::cout << "----------------" << std::endl;
-	}
-	std::cout << "-----------test n4 couldn't sign------------" << std::endl << std::endl;
-	{
-		Bureaucrat A("Arthur", 150);
-		RobotomyRequestForm B("Dylan");
-		ShrubberyCreationForm C("Logan");
-		PresidentialPardonForm D("Mulan");
+		Bureaucrat C("Jean", 2);
+		C.executeForm(*rrf);
 		std::cout << "----------------" << std::endl;
-		A.signForm(B);
-		A.signForm(C);
-		A.signForm(D);
-		std::cout << "----------------" << std::endl;
-	}
-	std::cout << "-----------test n5 Form------------" << std::endl << std::endl;
-	{
-		Bureaucrat A("Arthur", 150);
-		RobotomyRequestForm B;
-		std::cout << "----------------" << std::endl;
-		B.beSigned(A);
-		std::cout << "----------------" << std::endl;
+		delete rrf;
 	}
 
 }

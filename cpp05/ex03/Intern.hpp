@@ -29,8 +29,15 @@ class Intern
         AForm   *robotomy(std::string target);
         AForm   *shrubbery(std::string target);
 
-        AForm   *makeForm(std::string form, std::string target);
+        AForm   *makeForm(std::string form_name, std::string target);
+       
+        AForm    **function(std::string target);
 
+        typedef struct s_FormList
+        {
+            std::string FormName;
+            AForm   *(Intern::*function)(std::string target);
+        }t_FormList;
 };
 
 #endif

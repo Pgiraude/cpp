@@ -8,7 +8,7 @@ Intern::Intern(void)
 
 Intern::Intern(Intern const &copy)
 {
-    *this = copy;
+    (void)copy;
     std::cout << "Intern COPY " << GREEN "constructor" RESET << " called" << std::endl;
 }
 
@@ -39,18 +39,21 @@ AForm   *Intern::shrubbery(std::string target)
     return (new ShrubberyCreationForm(target));
 }
 
-AForm   *Intern::makeForm(std::string form, std::string target)
+AForm   *Intern::makeForm(std::string form_name, std::string target)
 {
-    std::string FormNames[] = {"presidential pardon", "robotomy request", "shrubbery creation"};
-    AForm *FormList[3] = {Intern::presidential(target), Intern::robotomy(target), Intern::shrubbery(target)};
+    t_FormList formlist[3] = {
+        {"presidential pardon", &Intern::presidential},
+        {"robotomy request", &Intern::robotomy},
+        {"shrubbery creation", &Intern::shrubbery}};
+    
     for (int i = 0; i < 3; i++)
     {
-        if (form == FormNames[i])
+        if (form_name == formlist[i].FormName)
         {
-            std::cout << GREEN "Intern has create form " << form << RESET << std::endl;
-            return (FormList[i]);
+            std::cout << GREEN "Intern has create form " << form_name << RESET << std::endl;
+            return ((this->*formlist[i].function)(target));
         }
     }
-    std::cerr << RED "Intern failed create form " << form << " Because he don't exist" RESET << std::endl;
+    std::cerr << RED "Intern failed create form " << form_name << " Because he don't exist" RESET << std::endl;
     return (NULL);
 }
