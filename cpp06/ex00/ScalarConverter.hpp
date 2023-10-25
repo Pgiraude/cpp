@@ -1,7 +1,9 @@
 #ifndef SCALARCONVERTER_HPP
 # define SCALARCONVERTER_HPP
 
-#include <iostream>
+# include <iostream>
+# include <stdlib.h>
+# include <sstream>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -15,18 +17,19 @@ class ScalarConverter
 {
     public:
         ScalarConverter(void);
-        ScalarConverter(std::string name);
         ScalarConverter(ScalarConverter const &copy);
         ~ScalarConverter(void);
 
         ScalarConverter	&operator=(ScalarConverter const &rhs);
 
-        std::string	getName(void) const;
+        static void convert(std::string to_conv);
+
+        static void printchar(std::string to_conv);
+        static void printint(std::string to_conv);
+        static void printfloat(std::string to_conv);
+        static void printdouble(std::string to_conv);
 
     private:
-        std::string	_name;
 };
-
-std::ostream    &operator<<(std::ostream &out, const ScalarConverter &i);
 
 #endif
