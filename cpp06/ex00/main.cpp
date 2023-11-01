@@ -1,5 +1,9 @@
 #include "ScalarConverter.hpp"
 
+float inf = std::numeric_limits<float>::infinity();
+double inff = std::numeric_limits<double>::infinity();
+
+
 int main(int argc, char **argv)
 {
     if (argc != 2)
@@ -11,7 +15,7 @@ int main(int argc, char **argv)
     A.printfloat(argv[1]);
     A.printdouble(argv[1]);
 
-    double F = 15444646640.98;
-    std::cout << F << std::endl;
+    // double F = 10;
+    std::cout << -1 * inf << inff << std::endl;
 }
 

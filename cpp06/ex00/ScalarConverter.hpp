@@ -4,6 +4,7 @@
 # include <iostream>
 # include <stdlib.h>
 # include <sstream>
+# include <limits>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
