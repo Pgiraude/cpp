@@ -24,26 +24,49 @@ ScalarConverter    &ScalarConverter::operator=(ScalarConverter const &rhs)
 	return (*this);
 }
 
+void	ScalarConverter::printchar(std::string to_conv)
+{
+	std::stringstream ss;
+	ss << to_conv;
+	long int value;
+	ss >> value;
+	if (value >= 0 && value <= 127 && std::isgraph(value))
+		std::cout << "char:\t" << static_cast <char>(value) << std::endl;
+	else
+		std::cout << "char:\tNon displayable" << std::endl;
+}
+
 void	ScalarConverter::printint(std::string to_conv)
 {
-	int	nbr;
 	if (to_conv.length() == 1)
 	{
-		std::cout << "ScalarConverter conv string to int A" << static_cast <int>(to_conv[0]) << std::endl;
+		std::cout << "int:\t" << static_cast <int>(to_conv[0]) << std::endl;
 		return ;
 	}
+	long int	nbr;
 	nbr = atoi(to_conv.c_str());
 
-	std::cout << "ScalarConverter conv string to int " << nbr << std::endl;
+	std::cout << "int:\t" << static_cast<int>(nbr) << std::endl;
+
+}
+
+void	ScalarConverter::printfloat(std::string to_conv)
+{
+	std::stringstream ss;
+	ss << to_conv;
+	float value;
+	ss >> value;
+
+	std::cout << "float:\t" << value << ".0f" <<std::endl;
 
 }
 
 void	ScalarConverter::printdouble(std::string to_conv)
 {
 	std::stringstream ss(to_conv);
-	double test;
-	ss >> test;
+	double value;
+	ss >> value;
 
-	std::cout << "ScalarConverter conv string to double " << test << std::endl;
+	std::cout << "double:\t" << value << std::endl;
 
 }
