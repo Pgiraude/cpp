@@ -10,12 +10,7 @@ int main(int argc, char **argv)
         return (1);
     
     ScalarConverter A;
-    A.printchar(argv[1]);
-    A.printint(argv[1]);
-    A.printfloat(argv[1]);
-    A.printdouble(argv[1]);
 
-    // double F = 10;
-    std::cout << -1 * inf << inff << std::endl;
+    A.convert(argv[1]);
 }
 

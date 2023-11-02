@@ -27,7 +27,7 @@ ScalarConverter    &ScalarConverter::operator=(ScalarConverter const &rhs)
 int	CheckValideInput(std::string input)
 {
 	if (input.length() == 1)
-		return (0);
+		return (1);
 	int i = 0;
 	if (input[i] == '-' || input[i] == '+')
 		i++;
@@ -40,9 +40,9 @@ int	CheckValideInput(std::string input)
 	if (input[i] == 'f' && input[i])
 		i++;
 	if (input[i])
-		return (1);
-	else
 		return (0);
+	else
+		return (1);
 }
 
 void	ScalarConverter::printchar(std::string to_conv)
@@ -83,27 +83,61 @@ void	ScalarConverter::printint(std::string to_conv)
 
 void	ScalarConverter::printfloat(std::string to_conv)
 {
+	if (to_conv.length() == 1)
+	{
+		std::cout << "float:\t" << static_cast <float>(to_conv[0]) << ".0f" << std::endl;
+		return ;
+	}
 	std::stringstream ss;
 	ss << to_conv;
-	float value;
+	float			value;
 	ss >> value;
-	std::cout << "float:\t" << value << ".0f" <<std::endl;
+	ss.clear();
+
+	ss.str(to_conv);
+	long long int	tmp;
+	ss >> tmp;
+	float			round_nbr;
+	round_nbr = static_cast <float>(tmp);
+
+	ss.clear();
+	ss << value;
+	std::string	str_value;
+	str_value = ss.str();
+
+	if (value - round_nbr == 0 && str_value.find('e') == std::string::npos && str_value.find('E') == std::string::npos)
+		std::cout << "float:\t" << value << ".0f" <<std::endl;
+	else
+		std::cout << "float:\t" << value << "f" <<std::endl;
 
 }
 
 void	ScalarConverter::printdouble(std::string to_conv)
 {
+	if (to_conv.length() == 1)
+	{
+		std::cout << "double:\t" << static_cast <double>(to_conv[0])<< ".0" << std::endl;
+		return ;
+	}
 	std::stringstream ss(to_conv);
 	double value;
 	ss >> value;
+	ss.clear();
 
-	std::cout << "double:\t" << value << std::endl;
-
+	ss.str(to_conv);
+	long long int	tmp;
+	ss >> tmp;
+	double			round_nbr;
+	round_nbr = static_cast <double>(tmp);
+	if (value - round_nbr == 0)
+		std::cout << "double:\t" << value << ".0" << std::endl;
+	else
+		std::cout << "double:\t" << value << std::endl;
 }
 
 void	ScalarConverter::convert(std::string to_conv)
 {
-	if (CheckValideInput(to_conv) == 0)
+	if (CheckValideInput(to_conv))
 	{
 		printchar(to_conv);
 		printint(to_conv);
@@ -114,6 +148,25 @@ void	ScalarConverter::convert(std::string to_conv)
 	{
 		std::cout << "char:\tImpossible" << std::endl;
 		std::cout << "int:\tImpossible" << std::endl;
-		if (to_conv == "+inf" || "inf" || "+inff" || "inff")
+		if (to_conv == "+inf" || to_conv == "inf" || to_conv == "+inff" || to_conv == "inff")
+		{
+			std::cout << "float:\t" << std::numeric_limits<float>::infinity() << "f" << std::endl;
+			std::cout << "double:\t" << std::numeric_limits<double>::infinity() << std::endl;
+		}
+		else if (to_conv == "-inf" || to_conv == "-inff")
+		{
+			std::cout << "float:\t" << -1 * std::numeric_limits<float>::infinity() << "f" << std::endl;
+			std::cout << "double:\t" << -1 * std::numeric_limits<double>::infinity() << std::endl;
+		}
+		else if (to_conv == "nan" || to_conv == "nanf")
+		{
+			std::cout << "float:\t" << std::numeric_limits<float>::quiet_NaN() << "f" << std::endl;
+			std::cout << "double:\t" << std::numeric_limits<double>::quiet_NaN() << std::endl;
+		}
+		else
+		{
+			std::cout << "float:\tImpossible" << std::endl;
+			std::cout << "double:\tImpossible" << std::endl;
+		}
 	}
 }
