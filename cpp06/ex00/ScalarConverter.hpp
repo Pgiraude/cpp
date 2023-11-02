@@ -25,6 +25,7 @@ class ScalarConverter
 
         static void convert(std::string to_conv);
 
+    private:
         static void printchar(std::string to_conv);
         static void printint(std::string to_conv);
         static void printfloat(std::string to_conv);
@@ -32,5 +33,7 @@ class ScalarConverter
 
     private:
 };
+
+std::ostream    &operator<<(std::ostream &out, const ScalarConverter &i);
 
 #endif

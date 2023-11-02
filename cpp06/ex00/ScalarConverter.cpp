@@ -24,7 +24,7 @@ ScalarConverter    &ScalarConverter::operator=(ScalarConverter const &rhs)
 	return (*this);
 }
 
-int	CheckValideInput(std::string input)
+static int	CheckValideInput(std::string input)
 {
 	if (input.length() == 1)
 		return (1);
@@ -105,11 +105,12 @@ void	ScalarConverter::printfloat(std::string to_conv)
 	std::string	str_value;
 	str_value = ss.str();
 
-	if (value - round_nbr == 0 && str_value.find('e') == std::string::npos && str_value.find('E') == std::string::npos)
+	if (value == std::numeric_limits<float>::max() || value == std::numeric_limits<float>::min())
+		std::cout << "float:\tImpossible" << std::endl;
+	else if (value - round_nbr == 0 && str_value.find('e') == std::string::npos && str_value.find('E') == std::string::npos)
 		std::cout << "float:\t" << value << ".0f" <<std::endl;
 	else
 		std::cout << "float:\t" << value << "f" <<std::endl;
-
 }
 
 void	ScalarConverter::printdouble(std::string to_conv)
@@ -120,8 +121,12 @@ void	ScalarConverter::printdouble(std::string to_conv)
 		return ;
 	}
 	std::stringstream ss(to_conv);
-	double value;
+	double		value;
+	long double	lvalue;
 	ss >> value;
+	ss.clear();
+	ss << to_conv;
+	ss >> lvalue;
 	ss.clear();
 
 	ss.str(to_conv);
@@ -129,7 +134,10 @@ void	ScalarConverter::printdouble(std::string to_conv)
 	ss >> tmp;
 	double			round_nbr;
 	round_nbr = static_cast <double>(tmp);
-	if (value - round_nbr == 0)
+
+	if (value == std::numeric_limits<double>::max() || lvalue == std::numeric_limits<double>::min())
+		std::cout << "double:\tImpossible" << std::endl;
+	else if (value - round_nbr == 0)
 		std::cout << "double:\t" << value << ".0" << std::endl;
 	else
 		std::cout << "double:\t" << value << std::endl;
@@ -169,4 +177,14 @@ void	ScalarConverter::convert(std::string to_conv)
 			std::cout << "double:\tImpossible" << std::endl;
 		}
 	}
+}
+
+std::ostream    &operator<<(std::ostream &out, const ScalarConverter &i)
+{
+	std::string input;
+
+	std::cout << "Enter a number here:\n";
+	std::cin >> input;
+	i.convert(input);
+	return (out);
 }
