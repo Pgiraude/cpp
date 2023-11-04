@@ -1,7 +1,8 @@
 #ifndef ARRAY_HPP
 # define ARRAY_HPP
 
-#include <iostream>
+# include <iostream>
+# include <exception>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -14,20 +15,25 @@
 template < typename T >
 class Array
 {
-    public:
-        Array< T >(void);
-        Array< T >(T name);
-        Array< T >(Array const &copy);
-        ~Array< T >(void);
+	public:
+		Array(void);
+		Array(unsigned int n);
+		Array(Array const &copy);
+		~Array(void);
 
-        Array	&operator=(Array const &rhs);
+		Array	&operator=(Array const &rhs);
+		T	&operator[](int idx);
 
-        std::string	getName(void) const;
+		int	size(void) const;
 
-    private:
-        std::string	_name;
+	private:
+		T				*_elements;
+		unsigned int	_size;
 };
 
-std::ostream    &operator<<(std::ostream &out, const Array &i);
+template < typename T >
+std::ostream    &operator<<(std::ostream &out, const Array<T> &i);
+
+# include "Array.tpp"
 
 #endif
