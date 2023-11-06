@@ -63,8 +63,12 @@ int main(void)
 		Bureaucrat A("Arthur", 150);
 		RobotomyRequestForm B;
 		std::cout << "----------------" << std::endl;
-		B.beSigned(A);
+		try{
+			B.beSigned(A);
+		}
+		catch (std::exception &e){
+			std::cerr << "Can't work because... " << e.what() << std::endl;
+		}
 		std::cout << "----------------" << std::endl;
 	}
-
 }

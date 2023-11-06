@@ -43,4 +43,19 @@ int main(void)
 		std::cout << A;
 		std::cout << B;
 	}
+	std::cout << "-----------test n5 try besign------------" << std::endl << std::endl;
+	{
+		Bureaucrat A("Paul", 80);
+		Form B("Alien report", 60, 60);
+		
+		std::cout << B;
+		try{
+			B.beSigned(A);
+		}
+		catch (std::exception &e){
+			std::cerr << "Can't sign ALIEN REPORT because.... " << e.what() << std::endl;
+		}
+		std::cout << A;
+		std::cout << B;
+	}
 }

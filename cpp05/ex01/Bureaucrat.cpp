@@ -61,14 +61,16 @@ void	Bureaucrat::incrementGrade(void)
 	{
 		if (this->_grade <= 1)
 			throw (Bureaucrat::GradeTooHighException());
+		else if (this->_grade > 150)
+			throw (Bureaucrat::GradeToolowException());
 		else
 			this->_grade--;
 	}
-	catch(Bureaucrat::GradeTooHighException &e)
+	catch(std::exception &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << "Can't increment " << _name << " because " << e.what() << '\n';
 	}
-	std::cout << "Bureaucrat " << this->getName() << " is up to grade " << this->getGrade() << " now" << std::endl;
+	std::cout << "Bureaucrat " << this->getName() << " is now grade " << this->getGrade() << std::endl;
 }
 
 void	Bureaucrat::decrementGrade(void)
@@ -78,15 +80,18 @@ void	Bureaucrat::decrementGrade(void)
 		if (this->_grade >= 150){
 			throw (Bureaucrat::GradeToolowException());
 		}
+		else if (this->_grade < 1){
+			throw (Bureaucrat::GradeTooHighException());
+		}
 		else{
 			this->_grade++;
 		}
 	}
 	catch(Bureaucrat::GradeToolowException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << "Can't decrement " << _name << " because " << e.what() << '\n';
 	}
-	std::cout << "Bureaucrat " << this->getName() << " is down to grade " << this->getGrade() << " now" << std::endl;
+	std::cout << "Bureaucrat " << this->getName() << " is now grade " << this->getGrade() << std::endl;
 }
 
 void	Bureaucrat::signForm(Form &form)

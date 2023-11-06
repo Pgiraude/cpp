@@ -16,18 +16,20 @@ int main(void)
 		A.decrementGrade();
 		std::cout << A;
 	}
-	std::cout << "-----------test n2 decrement but min------------" <<std::endl << std::endl;
+	std::cout << "-----------test n3 increment------------" <<std::endl << std::endl;
 	{
 		Bureaucrat A;
 
 		A.incrementGrade();
 		std::cout << A;
 	}
-	std::cout << "-----------test n2 decrement but min------------" <<std::endl << std::endl;
+	std::cout << "-----------test n4 wrong grade------------" <<std::endl << std::endl;
 	{
-		Bureaucrat A("", 5);
+		Bureaucrat A("bob", 458);
 
 		A.incrementGrade();
-		std::cout << A;
+
+		
 	}
+
 }
