@@ -12,6 +12,7 @@
 # define PURPLE	"\e[35m"
 # define CYAN	"\e[36m"
 
+
 template < typename T >
 class Array
 {
@@ -22,12 +23,12 @@ class Array
 		~Array(void);
 
 		Array	&operator=(Array const &rhs);
-		T	&operator[](int idx);
+		T	&operator[](unsigned int idx);
 
-		int	size(void) const;
+		unsigned int	size(void) const;
 
 	private:
-		T				*_elements;
+		T				*_elementsArray;
 		unsigned int	_size;
 };
 
@@ -35,5 +36,6 @@ template < typename T >
 std::ostream    &operator<<(std::ostream &out, const Array<T> &i);
 
 # include "Array.tpp"
+
 
 #endif

@@ -7,10 +7,14 @@ int main(int, char**)
     
     for (int i = 0; i < 10; i++)
     {
-        numbers[i] = 10;
+        numbers[i] = 1440;
     }
     numbers[9] = 100;
-    std::cout << "element 0 = " << numbers[0] << std::endl;
-    std::cout << "element 9 = " << numbers[9] << std::endl;
+    std::cout << numbers<< std::endl;
+
+    Array<int> nbr(5);
+    nbr = numbers;
+
+    std::cout << nbr;
 
 }
