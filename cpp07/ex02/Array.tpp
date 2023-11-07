@@ -22,9 +22,11 @@ Array<T>::~Array(void)
 }
 
 template<typename T>
-Array<T>::Array(Array const &copy)
+Array<T>::Array(Array const &copy) : _size(copy._size)
 {
-    *this = copy;
+    this->_elementsArray = new T[_size];
+    for (unsigned int i = 0; i < _size; i++)
+        _elementsArray[i] = copy._elementsArray[i];
 }
 
 template<typename T>

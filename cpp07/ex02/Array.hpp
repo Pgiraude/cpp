@@ -3,6 +3,7 @@
 
 # include <iostream>
 # include <exception>
+# include <cstdlib>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
