@@ -4,6 +4,9 @@
 # include <iostream>
 # include <exception>
 # include <list>
+# include <map>
+# include <vector>
+# include <algorithm>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -14,11 +17,9 @@
 # define CYAN	"\e[36m"
 
 
-// template < typename T>
-// int	easyfind(T arg, int to_find)
-// {
+template < typename T>
+int	easyfind(T arg, int to_find);
 
-// }
 
 
 # include "easyfind.tpp"
