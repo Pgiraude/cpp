@@ -2,6 +2,7 @@
 # define SPAN_HPP
 
 #include <iostream>
+#include <vector>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -14,17 +15,25 @@
 class Span
 {
     public:
-        Span(void);
-        Span(std::string name);
+        Span(unsigned int N);
         Span(Span const &copy);
         ~Span(void);
 
         Span	&operator=(Span const &rhs);
 
-        std::string	getName(void) const;
+        class	ArrayFull : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Array is full!" RESET);
+				}
+		};    
 
     private:
-        std::string	_name;
+        std::vector<unsigned int>           _array;
+        unsigned int                        _arraySize;
+        std::vector<unsigned int>::iterator _it;
 };
 
 std::ostream    &operator<<(std::ostream &out, const Span &i);

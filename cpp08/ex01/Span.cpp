@@ -1,20 +1,14 @@
 #include "Span.hpp"
 
 
-Span::Span(void) : _name("default")
+Span::Span(unsigned int N) : _arraySize(N)
 {
-    std::cout << "Span VOID " << GREEN "constructor" RESET << " called" << std::endl;
-}
-
-Span::Span(std::string name) : _name(name)
-{
-    if (name.empty())
-        this->_name = "default";
     std::cout << "Span STRING " << GREEN "constructor" RESET << " called" << std::endl;
 }
 
-Span::Span(Span const &copy) : _name(copy._name)
+Span::Span(Span const &copy)
 {
+    *this = copy; //need good implementation of operator '='
     std::cout << "Span COPY " << GREEN "constructor" RESET << " called" << std::endl;
 }
 
@@ -25,19 +19,19 @@ Span::~Span(void)
 
 Span    &Span::operator=(Span const &rhs)
 {
-    if (this != &rhs)
-        this->_name = rhs._name;
+    if (*_it < _array.size()) //need to change
+        throw ("not good")
+    else //copy array and other private elements
+
     std::cout << "Span '=' " << YELLOW "assignement" RESET << " called" << std::endl;
     return (*this);
 }
 
-std::string	Span::getName(void) const
-{
-    return (this->_name);
-}
 
 std::ostream	&operator<<(std::ostream &out, const Span &i)
 {
-    out << "<< Span name is " << i.getName() << std::endl;
+    out << "<< Span value are :" << std::endl;
+    for (std::vector<unsigned int>::iterator it = _array.begin() ; it != _array.end(); it++)
+        out << *it << ", ";
     return (out);
 }
