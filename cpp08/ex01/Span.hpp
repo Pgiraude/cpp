@@ -18,9 +18,14 @@ class Span
         Span(unsigned int N);
         Span(Span const &copy);
         ~Span(void);
-
+        //OPERATOR//
         Span	&operator=(Span const &rhs);
+        //GETEUR//
+        std::vector<unsigned int> getArray(void) const;
+        //OTHER//
+        void    addNumber(int nbr);
 
+        //EXCEPTION//
         class	ArrayFull : public std::exception
 		{
 			public:
@@ -33,7 +38,6 @@ class Span
     private:
         std::vector<unsigned int>           _array;
         unsigned int                        _arraySize;
-        std::vector<unsigned int>::iterator _it;
 };
 
 std::ostream    &operator<<(std::ostream &out, const Span &i);
