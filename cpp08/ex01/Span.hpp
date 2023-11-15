@@ -2,6 +2,7 @@
 # define SPAN_HPP
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <cstdlib>
 
@@ -25,6 +26,7 @@ class Span
         std::vector<int> const &getArray(void) const;
         //OTHER//
         void    addNumber(int nbr);
+        void    addNumber(std::vector<int>::const_iterator &begin, std::vector<int>::const_iterator &end);
         void    fillArray(void);
         int     shortestSpan(void);
         int     longestSpan(void);
@@ -36,6 +38,14 @@ class Span
 				virtual const char *what() const throw()
 				{
 					return (RED "Array is full!" RESET);
+				}
+		};
+        class	ArrayToSmall : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (BLUE "Array is too small" RESET);
 				}
 		};    
 
