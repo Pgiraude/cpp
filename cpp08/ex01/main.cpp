@@ -115,10 +115,10 @@ int main(void)
 		std::vector<int>::const_iterator end = toto.getArray().end();
 		copy3.addNumber(begin, end);
 
-		std::cout << "original " << toto;
-		std::cout << "copy1 " << copy1;
-		std::cout << "copy2 " << copy2;
-		std::cout << "copy3 " << copy3;
+		std::cout << GREEN "original " RESET << toto;
+		std::cout << YELLOW "copy1 " RESET << copy1;
+		std::cout << YELLOW "copy2 " RESET << copy2;
+		std::cout << YELLOW "copy3 " RESET << copy3;
 	}
 	std::cout <<  "\n-------Test n7 add multiple Numbers-----------" << std::endl;
 
@@ -149,5 +149,4 @@ int main(void)
 		std::cout << "result should be : 10, 11, 88, [random], [random]" << std::endl;
 		std::cout << toto;
 	}
-
 }
