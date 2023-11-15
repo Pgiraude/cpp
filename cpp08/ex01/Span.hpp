@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -21,9 +22,12 @@ class Span
         //OPERATOR//
         Span	&operator=(Span const &rhs);
         //GETEUR//
-        std::vector<unsigned int> getArray(void) const;
+        std::vector<int> const &getArray(void) const;
         //OTHER//
         void    addNumber(int nbr);
+        void    fillArray(void);
+        int     shortestSpan(void);
+        int     longestSpan(void);
 
         //EXCEPTION//
         class	ArrayFull : public std::exception
@@ -36,8 +40,8 @@ class Span
 		};    
 
     private:
-        std::vector<unsigned int>           _array;
-        unsigned int                        _arraySize;
+        std::vector<int>           _array;
+        unsigned int               _arraySize;
 };
 
 std::ostream    &operator<<(std::ostream &out, const Span &i);
