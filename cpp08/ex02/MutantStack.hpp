@@ -19,18 +19,12 @@ class MutantStack
 
 
 		MutantStack(void);
-		MutantStack(std::string name);
 		MutantStack(MutantStack const &copy);
 		~MutantStack(void);
 
 		MutantStack	&operator=(MutantStack const &rhs);
 
-		std::string	getName(void) const;
 
-	private:
-		std::string	_name;
 };
-
-std::ostream    &operator<<(std::ostream &out, const MutantStack &i);
 
 #endif
