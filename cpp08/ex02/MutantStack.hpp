@@ -2,6 +2,8 @@
 # define MUTANTSTACK_HPP
 
 #include <iostream>
+#include <stack>
+#include <list>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -11,12 +13,12 @@
 # define PURPLE	"\e[35m"
 # define CYAN	"\e[36m"
 
-template<typename T>
-class MutantStack
+template<typename T, typename Seq = std::deque<T>>
+class MutantStack : public std::stack<T, Seq>
 {
 	public:
-	typedef typename std::stack<T>::container_type::iterator	iterator;
-
+	// typedef typename std::stack<T>::container_type::iterator	iterator;
+	typedef typename std::stack<T, Seq>::iterator	iterator;
 
 		MutantStack(void);
 		MutantStack(MutantStack const &copy);
