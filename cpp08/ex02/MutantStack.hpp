@@ -1,24 +1,19 @@
 #ifndef MUTANTSTACK_HPP
 # define MUTANTSTACK_HPP
 
-#include <iostream>
-#include <stack>
-#include <list>
+# include <iostream>
+# include <stack>
+# include <list>
+# include <deque>
+# include <vector>
 
-# define RESET	"\e[0m"
-# define RED	"\e[31m"
-# define GREEN	"\e[32m"
-# define YELLOW	"\e[33m"
-# define BLUE	"\e[34m"
-# define PURPLE	"\e[35m"
-# define CYAN	"\e[36m"
-
-template<typename T, typename Seq = std::deque<T>>
-class MutantStack : public std::stack<T, Seq>
+template < typename T, typename Container = std::deque<T> >
+class MutantStack : public std::stack< T, Container>
 {
 	public:
-	// typedef typename std::stack<T>::container_type::iterator	iterator;
-	typedef typename std::stack<T, Seq>::iterator	iterator;
+		typedef typename std::stack<T, Container>::container_type::iterator			iterator;
+		typedef typename std::stack<T, Container>::container_type::const_iterator	const_iterator;
+		typedef typename std::stack<T, Container>::container_type::reverse_iterator	reverse_iterator;
 
 		MutantStack(void);
 		MutantStack(MutantStack const &copy);
@@ -26,7 +21,16 @@ class MutantStack : public std::stack<T, Seq>
 
 		MutantStack	&operator=(MutantStack const &rhs);
 
+		iterator	end(void);
+		iterator	begin(void);
 
+		const_iterator	end(void) const;
+		const_iterator	begin(void) const;
+
+		reverse_iterator	rend(void);
+		reverse_iterator	rbegin(void);
 };
+
+#include "MutantStack.tpp"
 
 #endif

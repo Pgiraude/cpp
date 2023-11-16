@@ -6,7 +6,7 @@ RM = rm -f
 
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp MutantStack.cpp
+SRC = main.cpp
 
 HEADER = MutantStack.hpp MutantStack.tpp
 
