@@ -5,6 +5,7 @@
 #include <fstream>
 #include <map>
 #include <sstream>
+#include <cctype>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
