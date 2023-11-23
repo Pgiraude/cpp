@@ -108,7 +108,24 @@ int	inputFile_processing(std::map<std::string, float> &csv, char *input)
 	std::ifstream inputFile(input);
 	if (inputFile.fail())
 		return (3);
-		
+	std::string line;
+	std::getline(inputFile, line);
+	int pos;
+	while (std::getline(inputFile, line))
+	{
+		if ((pos = line.find(" | ")) != std::string::npos)
+		{
+			check_valide_date(line.substr(0, pos));
+		}
+		else
+		{
+			std::cout << "Error: bad input" << std::endl;
+		}
+	}
+
+
+
+	inputFile.close();	
 }
 
 int main(int argc, char **argv)
