@@ -8,7 +8,7 @@ CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 
 SRC = main.cpp
 
-HEADER = Whatever.hpp
+HEADER = whatever.hpp
 
 OBJS = $(SRC:.cpp=.o)
 
