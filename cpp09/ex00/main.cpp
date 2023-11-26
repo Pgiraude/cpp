@@ -56,48 +56,50 @@ int check_valide_number(std::string value)
 		return (1);
 }
 
-int	processing_line(std::string &line, std::map<std::string, float> &csv)
+int	processing_line(std::string &line, std::string &date, float &value, std::string separator)
 {
-	std::size_t pos = line.find(",");
+	std::size_t pos = line.find(separator);
 	if (pos == std::string::npos)
 		return (1);
-	if (line.substr(pos + 1).find(",") != std::string::npos)
+	if (line.substr(pos + separator.size()).find(separator) != std::string::npos)
 		return (2);
 	std::stringstream ss;
-	ss << line.substr(pos + 1);
-	float value;
+	ss << line.substr(pos + separator.size());
 	ss >> value;
 	ss.clear();
 	int error;
-	if ((error = check_valide_number(line.substr(pos + 1))) != 0)
+	if ((error = check_valide_number(line.substr(pos + separator.size()))) != 0)
 		return (error + 100);
 	if ((error = check_valide_date(line.substr(0, pos))) != 0)
 		return (error + 200);
-	csv[line.substr(0, pos)] = value;
-	// std::cout << line + " : " << line.substr(0, pos) << " " << csv[line.substr(0, pos)] << std::endl;
+	date = line.substr(0, pos);
 	return (0);
 }
 
 int dataFile_processing(std::map<std::string, float> &csv)
 {
-	int numLine = 1;
+	int 		count_line = 1;
+	float		exchange_rate;
+	std::string	date;
+	int			error;
+	std::string line;
 
 	std::ifstream dataFile("data.csv");
 	if (dataFile.fail())
 		return (2);
-	std::string line;
-	std::getline(dataFile, line);
-	processing_line(line, csv);
-	int error;
 	while (std::getline(dataFile, line))
 	{
-		numLine++;
-		if ((error = processing_line(line, csv)) > 200)
-			std::cout << "Error n°" << error << ": data.csv: line n°" << numLine << " not a valide date" << std::endl;
+		if (line == "date,exchange_rate" && count_line == 1)
+			;
+		else if ((error = processing_line(line, date, exchange_rate, ",")) > 200)
+			std::cout << "Error n°" << error << ": data.csv: line n°" << count_line << " not a valide date" << std::endl;
 		else if (error > 100)
-			std::cout << "Error n°" << error << ": data.csv: line n°" << numLine << " not a valide number" << std::endl;
+			std::cout << "Error n°" << error << ": data.csv: line n°" << count_line << " not a valide number" << std::endl;
 		else if (error > 0)
-			std::cout << "Error n°" << error << ": data.csv: line n°" << numLine << " bad input" << std::endl;
+			std::cout << "Error n°" << error << ": data.csv: line n°" << count_line << " bad input" << std::endl;
+		else
+			csv[date] = exchange_rate;
+		count_line++;
 	}
 	dataFile.close();
 	return (0);
@@ -105,27 +107,43 @@ int dataFile_processing(std::map<std::string, float> &csv)
 
 int	inputFile_processing(std::map<std::string, float> &csv, char *input)
 {
+	int 		count_line = 1;
+	float		value;
+	std::string	date;
+	int			error;
+	std::string line;
+
 	std::ifstream inputFile(input);
 	if (inputFile.fail())
 		return (3);
-	std::string line;
-	std::getline(inputFile, line);
-	int pos;
 	while (std::getline(inputFile, line))
 	{
-		if ((pos = line.find(" | ")) != std::string::npos)
-		{
-			check_valide_date(line.substr(0, pos));
-		}
+		if (line == "date | value" && count_line == 1)
+			;
+		else if ((error = processing_line(line, date, value, " | ")) > 200)
+			std::cout << "Error n°" << error << ": not a valide date => " << line << std::endl;
+		else if (error > 100)
+			std::cout << "Error n°" << error << ": not a valide number => " << line << std::endl;
+		else if (error > 0)
+			std::cout << "Error n°" << error << ": bad input => " << line << std::endl;
 		else
 		{
-			std::cout << "Error: bad input" << std::endl;
+			if (value > 1000)
+				std::cout << "Error: too large a number" << std::endl;
+			else if (value < 0)
+				std::cout << "Error: not a positive number" << std::endl;
+			else
+			{
+				if (csv.find(date) != csv.end())
+					std::cout << date << " => " << value << " = " << value * csv[date] << std::endl;
+				else
+					std::cout << date << " => " << value << " = " << value * csv << std::endl;
+			}
 		}
+		count_line++;
 	}
-
-
-
-	inputFile.close();	
+	inputFile.close();
+	return (0);
 }
 
 int main(int argc, char **argv)
