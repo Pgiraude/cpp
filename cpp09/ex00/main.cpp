@@ -36,6 +36,25 @@ int check_valide_date(std::string date)
 		return (error + 30);
 	if (date.size() != 10)
 		return (3);
+
+	struct tm timeinfo;
+	// if (sscanf(date.c_str(), "%d-%d-%d", &timeinfo.tm_year, &timeinfo.tm_mon, &timeinfo.tm_mday) != 3)
+    //     return (4);
+	// timeinfo.tm_year -= 1900;
+	
+	// timeinfo.tm_mon -= 1;
+
+	// // std::cout << timeinfo.tm_mon << std::endl;
+
+	// time_t result = mktime(&timeinfo);
+	// if ( result == -1)
+	// 	return (5);
+
+		// struct tm tm;
+
+	if (!strptime(date.c_str(), "%Y-%m-%d", &timeinfo)) std::cout << "date isn't valid\n";
+	// if (!strptime(date2, "%d/%m/%Y", &tm)) std::cout << "date2 isn't valid\n";
+
 	return (0);
 }
 
@@ -102,29 +121,6 @@ int dataFile_processing(std::map<std::string, float> &csv)
 		count_line++;
 	}
 	dataFile.close();
-	return (0);
-}
-
-void	date_date(void)
-{
-	std::string day;
-
-	int value;
-	std::stringstream ss;
-	ss << day;
-	ss >> value;
-	if (value == 1)
-		value = 31;
-	
-}
-
-int	find_last_date(std::map<std::string, float> &csv, std::string date)
-{
-	if (csv.find(date) == csv.end())
-	{
-		
-	}
-
 	return (0);
 }
 

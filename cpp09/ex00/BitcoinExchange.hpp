@@ -6,6 +6,7 @@
 #include <map>
 #include <sstream>
 #include <cctype>
+#include <ctime>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
