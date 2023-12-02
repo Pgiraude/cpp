@@ -105,6 +105,29 @@ int dataFile_processing(std::map<std::string, float> &csv)
 	return (0);
 }
 
+void	date_date(void)
+{
+	std::string day;
+
+	int value;
+	std::stringstream ss;
+	ss << day;
+	ss >> value;
+	if (value == 1)
+		value = 31;
+	
+}
+
+int	find_last_date(std::map<std::string, float> &csv, std::string date)
+{
+	if (csv.find(date) == csv.end())
+	{
+		
+	}
+
+	return (0);
+}
+
 int	inputFile_processing(std::map<std::string, float> &csv, char *input)
 {
 	int 		count_line = 1;
@@ -126,18 +149,22 @@ int	inputFile_processing(std::map<std::string, float> &csv, char *input)
 			std::cout << "Error n°" << error << ": not a valide number => " << line << std::endl;
 		else if (error > 0)
 			std::cout << "Error n°" << error << ": bad input => " << line << std::endl;
+		else if (value > 1000)
+			std::cout << "Error: too large a number" << std::endl;
+		else if (value < 0)
+			std::cout << "Error: not a positive number" << std::endl;
+		else if (date < csv.begin()->first)
+			std::cout << "Error: no bitcoin value register at this date and before" << std::endl;
 		else
 		{
-			if (value > 1000)
-				std::cout << "Error: too large a number" << std::endl;
-			else if (value < 0)
-				std::cout << "Error: not a positive number" << std::endl;
+			if (csv.find(date) != csv.end())
+				std::cout << date << " => " << value << " = " << value * csv[date] << std::endl;
+			else if (date > csv.rbegin()->first)
+				std::cout << date << " => " << value << " = " << value * csv.rbegin()->second << " WARNING: this value is calculated from the last value knowne " << csv.rbegin()->first << std::endl;
 			else
 			{
-				if (csv.find(date) != csv.end())
-					std::cout << date << " => " << value << " = " << value * csv[date] << std::endl;
-				else
-					std::cout << date << " => " << value << " = " << value * csv << std::endl;
+				std::map<std::string, float>::iterator it = csv.lower_bound(date);
+				std::cout << date << " => " << value << " = " << value * it->second << std::endl;
 			}
 		}
 		count_line++;
@@ -165,4 +192,12 @@ int main(int argc, char **argv)
 		std::cout << "Error n°3: can't open " << argv[1] << std::endl;
 		return (3);
 	}
+	// std::string A = "2009-01-01";
+	// std::string B = "2010-01-01";
+
+	// if (B > A)
+	// 	std::cout << "YES\n";
+	// std::map<std::string, float>::iterator it = csv.();
+	// it--;
+	// std::cout << it->first << " = " << it->second << std::endl;
 }
