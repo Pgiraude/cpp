@@ -5,8 +5,6 @@
 #include <fstream>
 #include <map>
 #include <sstream>
-#include <cctype>
-#include <ctime>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -20,18 +18,11 @@ class BitcoinExchange
 {
     public:
         BitcoinExchange(void);
-        BitcoinExchange(std::string name);
         BitcoinExchange(BitcoinExchange const &copy);
         ~BitcoinExchange(void);
 
         BitcoinExchange	&operator=(BitcoinExchange const &rhs);
 
-        std::string	getName(void) const;
-
-    private:
-        std::string	_name;
 };
-
-std::ostream    &operator<<(std::ostream &out, const BitcoinExchange &i);
 
 #endif
