@@ -16,8 +16,6 @@ int main(int argc, char **argv)
         std::cout << token << std::endl;
         if (token == "-" || token == "+" || token == "/" || token == "*")
         {
-            if (token.size() != 1)
-                return (2);
             if (stack.size() < 2)
                 return (4);
             int a = stack.top();
