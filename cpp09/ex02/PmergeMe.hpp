@@ -30,7 +30,7 @@ class PmergeMe
         //templates
 
         template <typename T>
-        int fill_list(T & container, char **argv)
+        int fill_container(T & container, char **argv)
         {
         	std::stringstream ss;
         	for (int i = 0; argv[i]; i++)
@@ -39,14 +39,16 @@ class PmergeMe
         	while (ss >> value)
         	{
         		if (value < 0 || value > std::numeric_limits<int>::max())
-        			return (3);
+        			throw PmergeMe::MaxInt();
         		container.push_back(static_cast<int>(value));
         	}
+			if (container.empty())
+				throw PmergeMe::EmptyContainer();
         	return (0);
         }
 
         template <typename T>
-        void	print_list(T & container)
+        void	print_container(T & container)
         {
         	int idx = 0;
         	for (typename T::iterator it = container.begin(); it != container.end(); it++)
@@ -61,6 +63,44 @@ class PmergeMe
         	}
         	std::cout << std::endl;
         }
+
+		// Exception
+
+		class	NotEnoughArguments : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Error: " RESET "need at least one argument");
+				}
+		};
+
+		class	InvalidInput : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Error: " RESET "invalid input. Should be a number > 0 and < intmax ");
+				}
+		};
+
+		class	MaxInt : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Error: " RESET "number > max int");
+				}
+		};
+
+		class	EmptyContainer : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Error: " RESET "no value input");
+				}
+		};
 
 };
 

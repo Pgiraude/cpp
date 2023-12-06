@@ -28,19 +28,17 @@ PmergeMe    &PmergeMe::operator=(PmergeMe const &rhs)
 
 void static merge(std::vector<int> &leftArray, std::vector<int> &rightArray, std::vector<int> &finalArray)
 {
-	std::size_t leftSize = finalArray.size() / 2;
-	std::size_t rightSize = finalArray.size() - leftSize;
 	std::size_t idx = 0, l = 0, r = 0;
-	while (l < leftSize && r < rightSize)
+	while (l < leftArray.size() && r < rightArray.size())
 	{
 		if (leftArray[l] < rightArray[r])
 			finalArray[idx++] = leftArray[l++];
 		else
 			finalArray[idx++] = rightArray[r++];
 	}
-	while (l < leftSize)
+	while (l < leftArray.size())
 		finalArray[idx++] = leftArray[l++];
-	while(r < rightSize)
+	while(r < rightArray.size())
 		finalArray[idx++] = rightArray[r++];
 }
 
@@ -61,41 +59,33 @@ void PmergeMe::mergeSort(std::vector<int> &Array)
 
 //MergeSort list
 
-void static merge(std::list<int> &leftArray, std::list<int> &rightArray, std::list<int> &finalArray)
+void static merge(std::list<int> &leftArray, std::list<int> &rightArray, std::list<int> &sortArray)
 {
-	std::size_t leftSize = finalArray.size() / 2;
-	std::size_t rightSize = finalArray.size() - leftSize;
-	std::size_t idx = 0, l = 0, r = 0;
-	while (l < leftSize && r < rightSize)
+	std::list<int>::iterator idx = sortArray.begin(), l = leftArray.begin(), r = rightArray.begin();
+	while (l != leftArray.end() && r != rightArray.end())
 	{
-		if (leftArray[l] < rightArray[r])
-			finalArray[idx++] = leftArray[l++];
+		if (*l < *r)
+			*idx++ = *l++;
 		else
-			finalArray[idx++] = rightArray[r++];
+			*idx++ = *r++;
 	}
-	while (l < leftSize)
-		finalArray[idx++] = leftArray[l++];
-	while(r < rightSize)
-		finalArray[idx++] = rightArray[r++];
+	while (l != leftArray.end())
+		*idx++ = *l++;
+	while(r != rightArray.end())
+		*idx++ = *r++;
 }
 
 void PmergeMe::mergeSort(std::list<int> &Array)
 {
 	if (Array.size() <= 1)
 		return ;
-	std::size_t middle = Array.size() / 2;
 	std::list<int> leftArray;
 	std::list<int> rightArray;
-    std::list<int>::iterator it = Array.begin();
-    std::size_t i = 0;
-    while (i < middle)
-    {
-        it++;
-        i++;
-    }
-	leftArray.insert(leftArray.begin(), Array.begin(), it);
-	rightArray.insert(rightArray.begin(), it, Array.end());
-
+    std::list<int>::iterator it_middle = Array.begin();
+    for (std::size_t i = 0; i < Array.size() / 2; i++)
+		it_middle++;
+	leftArray.insert(leftArray.begin(), Array.begin(), it_middle);
+	rightArray.insert(rightArray.begin(), it_middle, Array.end());
 	mergeSort(leftArray);
 	mergeSort(rightArray);
 	merge(leftArray, rightArray, Array);

@@ -1,68 +1,53 @@
 #include "PmergeMe.hpp"
 
-// int fill_list(std::list<int> &list, char **argv)
-// {
-// 	std::stringstream ss;
-// 	for (int i = 0; argv[i]; i++)
-// 		ss << argv[i] << " ";
-// 	long int value;
-// 	while (ss >> value)
-// 	{
-// 		if (value < 0 || value > std::numeric_limits<int>::max())
-// 			return (3);
-// 		list.push_back(static_cast<int>(value));
-// 	}
-// 	return (0);
-// }
-
-// void	print_list(std::list<int> &list)
-// {
-// 	int idx = 0;
-// 	for (std::list<int>::iterator it = list.begin(); it != list.end(); it++)
-// 	{
-// 		idx++;
-// 		if (idx > 4)
-// 		{
-// 			std::cout << "[...]";
-// 			break;
-// 		}
-// 		std::cout << *it << " ";
-// 	}
-// 	std::cout << std::endl;
-// }
-
-
-
-
-
-int main(int argc, char **argv)
+int check_input(int argc, char **argv)
 {
-	PmergeMe A;
-
 	if (argc < 2)
-		return (1);
-
+		throw PmergeMe::NotEnoughArguments();
 	for (int idx = 1; idx < argc; idx++)
 		for (int i = 0; argv[idx][i]; i++)
 			if (!isdigit(argv[idx][i]) && !isblank(argv[idx][i]))
-				return (2);
+				throw PmergeMe::InvalidInput();
+	return (0);
+}
+
+int main(int argc, char **argv)
+{
+	PmergeMe			algo;
+	std::list<int>		containerA;
+	std::vector<int>	containerB;
+
+	try{
+		check_input(argc, argv);
+		algo.fill_container(containerA, argv + 1);
+		algo.fill_container(containerB, argv + 1);
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << '\n';
+		return (1);
+	}
 	
-	std::list<int> listA;
-	if (A.fill_list(listA, argv + 1) != 0)
-		return (3);
-	listA.sort();
+	struct timespec start, end;
 
-
-	std::vector<int> listB;
-	if (A.fill_list(listB, argv + 1) != 0)
-		return (3);
 	std::cout << "Before:\t";
-	A.print_list(listB);
+	algo.print_container(containerA);
 
-	A.mergeSort(listB);
+	clock_gettime(CLOCK_REALTIME, &start);
+	algo.mergeSort(containerA);
+	clock_gettime(CLOCK_REALTIME, &end);
+	double listTime = ((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec)) / 1000;
 
 	std::cout << "After:\t";
-	A.print_list(listB);
+	algo.print_container(containerA);
+
+	clock_gettime(CLOCK_REALTIME, &start);
+	algo.mergeSort(containerB);
+	clock_gettime(CLOCK_REALTIME, &end);
+	double vectorTime = ((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec)) / 1000;
+
+	std::cout << "Time to process a range of " << containerA.size() << " elements with std::list   : " << listTime << " us" << std::endl;
+	std::cout << "Time to process a range of " << containerB.size() << " elements with std::vector : " << vectorTime << " us" << std::endl;
 
 	return (0);
 }
