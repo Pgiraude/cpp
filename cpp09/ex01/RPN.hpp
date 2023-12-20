@@ -37,7 +37,7 @@ class RPN
 				}
 		};
 
-        class	limits : public std::exception
+        class	Limits : public std::exception
 		{
 			public:
 				virtual const char *what() const throw()
@@ -52,6 +52,15 @@ class RPN
 				virtual const char *what() const throw()
 				{
 					return (RED "Error: " RESET "bad input");
+				}
+		};
+
+		class	DivideByZero : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Error: " RESET "can't divide by zero");
 				}
 		};
 };

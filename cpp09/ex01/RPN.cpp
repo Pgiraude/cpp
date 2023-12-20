@@ -42,7 +42,7 @@ static int  push_value(std::string &token, std::stack<int> &stack)
     convert.clear();
     if (value == std::numeric_limits<int>::max()
         || value == std::numeric_limits<int>::min())
-        throw RPN::limits();
+        throw RPN::Limits();
     stack.push(value);
     return (0);
 }
@@ -67,6 +67,8 @@ static int  operations(std::string &token, std::stack<int> &stack)
             stack.push(b * a);
             break;
         case '/':
+            if (a == 0)
+                throw RPN::DivideByZero();
             stack.push(b / a);
             break;
         default:
@@ -75,7 +77,7 @@ static int  operations(std::string &token, std::stack<int> &stack)
     }
     if (stack.top() == std::numeric_limits<int>::max()
         || stack.top() == std::numeric_limits<int>::min())
-        throw RPN::limits();
+        throw RPN::Limits();
     return (0);
 }
 
@@ -97,6 +99,6 @@ void    RPN::processing(char *input)
         throw RPN::Error();
     if (stack.top() == std::numeric_limits<int>::max()
         || stack.top() == std::numeric_limits<int>::min())
-        throw RPN::limits();
+        throw RPN::Limits();
     std::cout << GREEN "Result: " RESET << stack.top() << std::endl;
 }
