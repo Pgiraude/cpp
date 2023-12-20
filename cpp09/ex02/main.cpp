@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 	clock_gettime(CLOCK_REALTIME, &start);
 	algo.mergeSort(containerB);
 	clock_gettime(CLOCK_REALTIME, &end);
-	double vectorTime = ((end.tv_sec - start.tv_sec) * 1e6 + (end.tv_nsec - start.tv_nsec)) / 1000;
+	double vectorTime = ((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec)) / 1000;
 
 	std::cout << "Time to process a range of " << containerA.size() << " elements with std::list   : " << listTime << " us" << std::endl;
 	std::cout << "Time to process a range of " << containerB.size() << " elements with std::vector : " << vectorTime << " us" << std::endl;

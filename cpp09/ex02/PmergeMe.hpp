@@ -51,10 +51,11 @@ class PmergeMe
         void	print_container(T & container)
         {
         	int idx = 0;
+			int size = container.size();
         	for (typename T::iterator it = container.begin(); it != container.end(); it++)
         	{
         		idx++;
-        		if (idx > 4)
+        		if (idx > 4 && size > 5)
         		{
         			std::cout << "[...]";
         			break;
