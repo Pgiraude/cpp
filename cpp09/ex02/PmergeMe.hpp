@@ -27,6 +27,8 @@ class PmergeMe
         void mergeSort(std::vector<int> &Array);
         void mergeSort(std::list<int> &Array);
 
+		void mergeInsertionSort(std::vector<int> &Array);
+
         //templates
 
         template <typename T>

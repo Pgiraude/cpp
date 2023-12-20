@@ -31,22 +31,26 @@ int main(int argc, char **argv)
 	struct timespec start, end;
 
 	std::cout << "Before:\t";
-	algo.print_container(containerA);
+	algo.print_container(containerB);
 
 	clock_gettime(CLOCK_REALTIME, &start);
-	algo.mergeSort(containerA);
-	clock_gettime(CLOCK_REALTIME, &end);
-	double listTime = ((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec)) / 1000;
 
-	std::cout << "After:\t";
-	algo.print_container(containerA);
+	// algo.mergeSort(containerA);
+	algo.mergeInsertionSort(containerB);
 
-	clock_gettime(CLOCK_REALTIME, &start);
-	algo.mergeSort(containerB);
 	clock_gettime(CLOCK_REALTIME, &end);
 	double vectorTime = ((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec)) / 1000;
 
-	std::cout << "Time to process a range of " << containerA.size() << " elements with std::list   : " << listTime << " us" << std::endl;
+
+	std::cout << "After:\t";
+	algo.print_container(containerB);
+
+	// clock_gettime(CLOCK_REALTIME, &start);
+	// algo.mergeSort(containerA);
+	// clock_gettime(CLOCK_REALTIME, &end);
+	// double listTime = ((end.tv_sec - start.tv_sec) * 1e9 + (end.tv_nsec - start.tv_nsec)) / 1000;
+
+	//std::cout << "Time to process a range of " << containerA.size() << " elements with std::list   : " << listTime << " us" << std::endl;
 	std::cout << "Time to process a range of " << containerB.size() << " elements with std::vector : " << vectorTime << " us" << std::endl;
 
 	return (0);
