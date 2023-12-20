@@ -5,6 +5,7 @@
 #include <sstream>
 #include <cctype>
 #include <stack>
+#include <limits>
 
 # define RESET	"\e[0m"
 # define RED	"\e[31m"
@@ -23,7 +24,36 @@ class RPN
 
         RPN	&operator=(RPN const &rhs);
 
+        void    processing(char *input);
 
+        // EXCEPTIONS //
+
+        class	NotDigit : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Error: " RESET "not a digit");
+				}
+		};
+
+        class	limits : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Error: " RESET "final result or value must be included in ]min_int;max_int[");
+				}
+		};
+
+        class	Error : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (RED "Error: " RESET "bad input");
+				}
+		};
 };
 
 
