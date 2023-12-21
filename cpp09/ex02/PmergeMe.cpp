@@ -93,7 +93,7 @@ void PmergeMe::mergeSort(std::list<int> &Array)
 
 // ---------------------- Ford-johnson algorithm ----------------------
 
-std::vector< std::pair<int, int> > pairSplit(std::vector<int> &Array)
+std::vector< std::pair<int, int> > SplitInPairs(std::vector<int> &Array)
 {
 	std::vector< std::pair<int, int> > pairVector;
 	int lastValue;
@@ -109,7 +109,7 @@ std::vector< std::pair<int, int> > pairSplit(std::vector<int> &Array)
 	return (pairVector);
 }
 
-void sortPairs(std::vector< std::pair<int, int> > &pairVector)
+void SortPairs(std::vector< std::pair<int, int> > &pairVector)
 {
 	std::vector< std::pair<int, int> >::iterator it = pairVector.begin();
 	while (it != pairVector.end())
@@ -124,10 +124,37 @@ void sortPairs(std::vector< std::pair<int, int> > &pairVector)
 	}
 }
 
+void	Insert(std::pair<int, int> &pair, std::vector< std::pair<int, int> >::iterator it)
+{
+	if (n < 0)
+}
+
+std::vector< std::pair<int, int> >	InsertionSortPairs(std::vector< std::pair<int, int> > &pairVector, std::size_t n, std::vector< std::pair<int, int> >::iterator &it)
+{
+	if (n < 1)
+		return (pairVector);
+	else
+	{
+		InsertionSortPairs(pairVector, n - 1, ++it);
+		Insert(pairVector[n], it,  n - 1);
+	}
+	pairVector[1];
+}
+
+void	SortPairsByLargerValue(std::vector< std::pair<int, int> > &pairVector)
+{
+	std::vector< std::pair<int, int> >::iterator it = pairVector.begin();
+	std::size_t n = pairVector.size();
+
+	InsertionSortPairs(pairVector, n, it);
+
+}
+
 void PmergeMe::mergeInsertionSort(std::vector<int> &Array)
 {
-	std::vector< std::pair<int, int> > pairVector = pairSplit(Array);
-	sortPairs(pairVector);
+	std::vector< std::pair<int, int> > pairVector = SplitInPairs(Array);
+	SortPairs(pairVector);
+
 	for (std::vector< std::pair<int, int> >::iterator it =  pairVector.begin(); it != pairVector.end(); it++) {
             std::cout << "(" << it->first << ", " << it->second << ") ";
         }

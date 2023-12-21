@@ -167,7 +167,7 @@ int	inputFile_processing(std::map<std::string, float> &csv, char *input)
 			if (csv.find(date) != csv.end())
 				std::cout << date << " => " << value << " = " << value * csv[date] << std::endl;
 			else if (date > csv.rbegin()->first)
-				std::cout << YELLOW "WARNING: " RESET << date << " => " << value << " = " << value * csv.rbegin()->second << YELLOW " (value calculated from the last value known " << csv.rbegin()->first << ")" RESET << std::endl;
+				std::cout << date << " => " << value << " = " << value * csv.rbegin()->second << YELLOW " (WARNING last value known: " << csv.rbegin()->first << ")" RESET << std::endl;
 			else
 			{
 				std::map<std::string, float>::iterator it = csv.upper_bound(date);
