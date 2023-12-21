@@ -124,30 +124,27 @@ void SortPairs(std::vector< std::pair<int, int> > &pairVector)
 	}
 }
 
-void	Insert(std::pair<int, int> &pair, std::vector< std::pair<int, int> >::iterator it)
-{
-	if (n < 0)
-}
 
-std::vector< std::pair<int, int> >	InsertionSortPairs(std::vector< std::pair<int, int> > &pairVector, std::size_t n, std::vector< std::pair<int, int> >::iterator &it)
+void	InsertionSortPairs(std::vector< std::pair<int, int> > &pairVector, int n)
 {
 	if (n < 1)
-		return (pairVector);
-	else
+		return ;
+	InsertionSortPairs(pairVector, n - 1);
+	int					j = n - 2;
+	std::pair<int, int>	lastpair = pairVector[n - 1];
+
+	while (j >= 0 && pairVector[j].second > lastpair.second)
 	{
-		InsertionSortPairs(pairVector, n - 1, ++it);
-		Insert(pairVector[n], it,  n - 1);
+		pairVector[j + 1] = pairVector[j];
+		j--;
 	}
-	pairVector[1];
+	pairVector[j + 1] = lastpair;
 }
 
 void	SortPairsByLargerValue(std::vector< std::pair<int, int> > &pairVector)
 {
-	std::vector< std::pair<int, int> >::iterator it = pairVector.begin();
-	std::size_t n = pairVector.size();
-
-	InsertionSortPairs(pairVector, n, it);
-
+	int n = pairVector.size();
+	InsertionSortPairs(pairVector, n);
 }
 
 void PmergeMe::mergeInsertionSort(std::vector<int> &Array)
@@ -160,5 +157,10 @@ void PmergeMe::mergeInsertionSort(std::vector<int> &Array)
         }
     std::cout << std::endl;
 
+	SortPairsByLargerValue(pairVector);
+	for (std::vector< std::pair<int, int> >::iterator it =  pairVector.begin(); it != pairVector.end(); it++) {
+            std::cout << "(" << it->first << ", " << it->second << ") ";
+        }
+    std::cout << std::endl;
 
 }
