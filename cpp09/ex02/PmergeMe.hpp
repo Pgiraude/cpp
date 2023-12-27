@@ -23,7 +23,24 @@ class PmergeMe
 		bool				_isTale;
 		int					_tale;
 
-		void	checkIfOddSize(std::vector<int> &Array);
+		size_t				getJacobsthalNum(std::size_t n);
+
+		// ---------------------- vector ---------------------
+		std::vector<int>	splitPairContainer(std::vector< std::pair<int, int> > &pairVector);
+
+		void				finalInsertionVector(int value);
+		void				jackobsthalInsertionVector(std::vector<int> &pending);
+
+		
+
+		// ---------------------- list ---------------------
+
+		std::list<int>		splitPairContainer(std::list< std::pair<int, int> > &pairVector);
+
+		void				finalInsertionList(int value);
+		void				jackobsthalInsertionList(std::list<int> &pending);
+
+
 
     public:
         PmergeMe(void);
@@ -31,13 +48,18 @@ class PmergeMe
         ~PmergeMe(void);
 
         PmergeMe	&operator=(PmergeMe const &rhs);
+		
+		std::vector<int>	&getVector(void);
+		std::list<int>		&getList(void);
 
         void mergeSort(std::vector<int> &Array);
         void mergeSort(std::list<int> &Array);
 
 		void mergeInsertionSort(std::vector<int> &Array);
+		void mergeInsertionSort(std::list<int> &Array);
+		
 
-        //templates
+        //-------------------- templates ------------------------
 
         template <typename T>
         int fill_container(T & container, char **argv)
@@ -61,21 +83,33 @@ class PmergeMe
         void	print_container(T & container)
         {
         	int idx = 0;
-			// int size = container.size();
+			int size = container.size();
         	for (typename T::iterator it = container.begin(); it != container.end(); it++)
         	{
         		idx++;
-        		// if (idx > 4 && size > 5)
-        		// {
-        		// 	std::cout << "[...]";
-        		// 	break;
-        		// }
+        		if (idx > 4 && size > 5)
+        		{
+        			std::cout << "[...]";
+        			break;
+        		}
         		std::cout << *it << " ";
         	}
         	std::cout << std::endl;
         }
 
-		// Exception
+		template <typename T>
+		void	checkIfOddSize(T & container)
+		{
+			this->_isTale = false;
+			if (container.size() % 2 != 0)
+			{
+				this->_isTale = true;
+				this->_tale = container.back();
+				container.pop_back();
+			}
+		}
+
+		// ---------------------- Exceptions -----------------------
 
 		class	NotEnoughArguments : public std::exception
 		{
