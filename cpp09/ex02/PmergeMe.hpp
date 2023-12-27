@@ -17,6 +17,14 @@
 
 class PmergeMe
 {
+	private:
+		std::vector<int>	_sortVector;
+		std::list<int>		_sortList;
+		bool				_isTale;
+		int					_tale;
+
+		void	checkIfOddSize(std::vector<int> &Array);
+
     public:
         PmergeMe(void);
         PmergeMe(PmergeMe const &copy);
@@ -53,15 +61,15 @@ class PmergeMe
         void	print_container(T & container)
         {
         	int idx = 0;
-			int size = container.size();
+			// int size = container.size();
         	for (typename T::iterator it = container.begin(); it != container.end(); it++)
         	{
         		idx++;
-        		if (idx > 4 && size > 5)
-        		{
-        			std::cout << "[...]";
-        			break;
-        		}
+        		// if (idx > 4 && size > 5)
+        		// {
+        		// 	std::cout << "[...]";
+        		// 	break;
+        		// }
         		std::cout << *it << " ";
         	}
         	std::cout << std::endl;
