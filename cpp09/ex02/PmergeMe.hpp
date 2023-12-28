@@ -22,25 +22,17 @@ class PmergeMe
 		std::list<int>		_sortList;
 		bool				_isTale;
 		int					_tale;
-
 		size_t				getJacobsthalNum(std::size_t n);
 
 		// ---------------------- vector ---------------------
 		std::vector<int>	splitPairContainer(std::vector< std::pair<int, int> > &pairVector);
-
 		void				finalInsertionVector(int value);
 		void				jackobsthalInsertionVector(std::vector<int> &pending);
 
-		
-
 		// ---------------------- list ---------------------
-
 		std::list<int>		splitPairContainer(std::list< std::pair<int, int> > &pairVector);
-
 		void				finalInsertionList(int value);
 		void				jackobsthalInsertionList(std::list<int> &pending);
-
-
 
     public:
         PmergeMe(void);

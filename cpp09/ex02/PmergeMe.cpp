@@ -93,6 +93,11 @@ void	PmergeMe::tester(int argc, char **argv)
 		std::cerr << e.what();
 	}
 	mergeSort(container);
+	if (container.size() != _sortList.size() || container.size() != _sortVector.size())
+	{
+		std::cout << RED "KO: SIZE" RESET << std::endl;
+		return ;
+	}
 	std::vector<int>::iterator it = container.begin();
 	std::list<int>::iterator it2 = _sortList.begin();
 	std::vector<int>::iterator it3 = _sortVector.begin();

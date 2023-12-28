@@ -31,7 +31,6 @@ int main(int argc, char **argv)
 	algo.print_container(algo.getVector());
 	std::cout << "Time to process a range of " << algo.getList().size() << " elements with std::list   : " << listTime << " us" << std::endl;
 	std::cout << "Time to process a range of " << algo.getVector().size() << " elements with std::vector : " << vectorTime << " us" << std::endl;
-
 	// algo.tester(argc, argv);
 	return (0);
 }
