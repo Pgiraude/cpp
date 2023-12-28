@@ -6,7 +6,7 @@ PmergeMe::PmergeMe(void)
     //std::cout << "PmergeMe VOID " << GREEN "constructor" RESET << " called" << std::endl;
 }
 
-PmergeMe::PmergeMe(PmergeMe const &copy)
+PmergeMe::PmergeMe(PmergeMe const &copy) : _sortVector(copy._sortVector), _sortList(copy._sortList)
 {
     (void)copy;
     //std::cout << "PmergeMe COPY " << GREEN "constructor" RESET << " called" << std::endl;
@@ -17,9 +17,11 @@ PmergeMe::~PmergeMe(void)
     //std::cout << "PmergeMe VOID " << RED "destructor" RESET << " called" << std::endl;
 }
 
-PmergeMe    &PmergeMe::operator=(PmergeMe const &rhs)
+PmergeMe    &PmergeMe::operator=(PmergeMe const &rhs) 
 {
     (void)rhs;
+	_sortList = rhs._sortList;
+	_sortVector = rhs._sortVector;
     //std::cout << "PmergeMe '=' " << YELLOW "assignement" RESET << " called" << std::endl;
     return (*this);
 }
@@ -34,7 +36,18 @@ std::list<int>	&PmergeMe::getList(void)
 	return (this->_sortList);
 }
 
-//---------------------------MergeSort vector --------------------------------
+//--------------------------- MergeSort + Tester --------------------------------
+
+int PmergeMe::check_input(int argc, char **argv)
+{
+	if (argc < 2)
+		throw PmergeMe::NotEnoughArguments();
+	for (int idx = 1; idx < argc; idx++)
+		for (int i = 0; argv[idx][i]; i++)
+			if (!isdigit(argv[idx][i]) && !isblank(argv[idx][i]))
+				throw PmergeMe::InvalidInput();
+	return (0);
+}
 
 void static merge(std::vector<int> &leftArray, std::vector<int> &rightArray, std::vector<int> &finalArray)
 {
@@ -67,39 +80,41 @@ void PmergeMe::mergeSort(std::vector<int> &Array)
 	merge(leftArray, rightArray, Array);
 }
 
-//---------------MergeSort list------------------------
-
-void static merge(std::list<int> &leftArray, std::list<int> &rightArray, std::list<int> &sortArray)
+void	PmergeMe::tester(int argc, char **argv)
 {
-	std::list<int>::iterator idx = sortArray.begin(), l = leftArray.begin(), r = rightArray.begin();
-	while (l != leftArray.end() && r != rightArray.end())
+	std::vector<int> container;
+	try
 	{
-		if (*l < *r)
-			*idx++ = *l++;
-		else
-			*idx++ = *r++;
+		check_input(argc, argv);
+		fill_container(container, argv + 1);
 	}
-	while (l != leftArray.end())
-		*idx++ = *l++;
-	while(r != rightArray.end())
-		*idx++ = *r++;
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what();
+	}
+	mergeSort(container);
+	std::vector<int>::iterator it = container.begin();
+	std::list<int>::iterator it2 = _sortList.begin();
+	std::vector<int>::iterator it3 = _sortVector.begin();
+	while (it != container.end())
+	{
+		if (*it != *it2)
+		{
+			std::cout << RED "KO: LIST" RESET << std::endl;
+			return ;
+		}
+		if (*it != *it3)
+		{
+			std::cout << RED "KO: VECTOR" RESET << std::endl;
+			return ;
+		}
+		it++;
+		it2++;
+		it3++;
+	}
+	std::cout << GREEN "OK" RESET << std::endl;
 }
 
-void PmergeMe::mergeSort(std::list<int> &Array)
-{
-	if (Array.size() <= 1)
-		return ;
-	std::list<int> leftArray;
-	std::list<int> rightArray;
-    std::list<int>::iterator it_middle = Array.begin();
-    for (std::size_t i = 0; i < Array.size() / 2; i++)
-		it_middle++;
-	leftArray.insert(leftArray.begin(), Array.begin(), it_middle);
-	rightArray.insert(rightArray.begin(), it_middle, Array.end());
-	mergeSort(leftArray);
-	mergeSort(rightArray);
-	merge(leftArray, rightArray, Array);
-}
 // ------------------ jackobsthal numbers -------------
 
 std::size_t	PmergeMe::getJacobsthalNum(std::size_t n)
@@ -111,7 +126,7 @@ std::size_t	PmergeMe::getJacobsthalNum(std::size_t n)
 	return (getJacobsthalNum(n - 1) + 2 * getJacobsthalNum(n - 2));
 }
 
-// ---------------------- Ford-johnson algorithm vector ----------------------
+// VECTOR ---------------------- 1st steps Ford-johnson algorithm Split Pairs Vector ----------------------
 
 std::vector< std::pair<int, int> > splitInPairs(std::vector<int> &Array)
 {
@@ -159,6 +174,22 @@ void	sortPairsByLargerValue(std::vector< std::pair<int, int> > &pairVector, std:
 	pairVector[j + 1] = lastPair;
 }
 
+// VECTOR ---------------------- 2nd steps Ford-johnson algorithm Sort Vector ----------------------
+
+std::vector<int>	PmergeMe::splitPairContainer(std::vector< std::pair<int, int> > &pairVector)
+{
+	std::vector<int> pending;
+	for (std::vector< std::pair<int, int> >::iterator it = pairVector.begin();
+		it != pairVector.end(); it++)
+	{
+		pending.push_back(it->first);
+		this->_sortVector.push_back(it->second);
+	}
+	if (this->_isTale == true)
+		pending.push_back(this->_tale);
+	return (pending);
+}
+
 void	PmergeMe::finalInsertionVector(int value)
 {
 	std::vector<int>::iterator it = this->_sortVector.begin();
@@ -175,11 +206,11 @@ void	PmergeMe::jackobsthalInsertionVector(std::vector<int> &pending)
 
 	this->_sortVector.insert(this->_sortVector.begin(), *begin);
 	std::size_t	position = 0;
-	int			cycle = 1;
+	std::size_t	cycle = 1;
 	while (position + 1 < sizePending)
 	{
 		save = begin + position;
-		position += getJacobsthalNum(static_cast<long int>(cycle)) * 2;
+		position += getJacobsthalNum(cycle) * 2;
 		if (position >= sizePending)
 			position = sizePending - 1;
 		for (std::vector<int>::iterator it = (begin + position); it != save; it--)
@@ -187,21 +218,6 @@ void	PmergeMe::jackobsthalInsertionVector(std::vector<int> &pending)
 		cycle++;
 	}
 }
-
-std::vector<int>	PmergeMe::splitPairContainer(std::vector< std::pair<int, int> > &pairVector)
-{
-	std::vector<int> pending;
-	for (std::vector< std::pair<int, int> >::iterator it = pairVector.begin();
-		it != pairVector.end(); it++)
-	{
-		pending.push_back(it->first);
-		this->_sortVector.push_back(it->second);
-	}
-	if (this->_isTale == true)
-		pending.push_back(this->_tale);
-	return (pending);
-}
-
 
 void PmergeMe::mergeInsertionSort(std::vector<int> &Array)
 {
@@ -213,37 +229,12 @@ void PmergeMe::mergeInsertionSort(std::vector<int> &Array)
 	checkIfOddSize(Array);
 	std::vector< std::pair<int, int> > pairVector = splitInPairs(Array);
 	sortIndividualPairs(pairVector);
-
-
-	// for (std::vector< std::pair<int, int> >::iterator it =  pairVector.begin(); it != pairVector.end(); it++) {
-    //         std::cout << "(" << it->first << ", " << it->second << ") ";
-    //     }
-	// 	if (this->_isTale == true)
-	// 		std::cout << "this->_tale = " << this->_tale;
-    // std::cout << std::endl;
-
-
 	sortPairsByLargerValue(pairVector, pairVector.size());
-
-
-	// for (std::vector< std::pair<int, int> >::iterator it =  pairVector.begin(); it != pairVector.end(); it++) {
-    //         std::cout << "(" << it->first << ", " << it->second << ") ";
-    //     }
-	// if (this->_isTale == true)
-	// 	std::cout << "this->_tale = " << this->_tale;
-    // std::cout << std::endl;
-
 	std::vector<int> pending = splitPairContainer(pairVector);
-
-	// std::cout << "sortedvect  = ";
-	// print_container(_sortVector);
-	// std::cout << "pendingvect = ";
-	// print_container(pending);
-
 	jackobsthalInsertionVector(pending);
 }
 
-// ---------------------- Ford-johnson algorithm list ----------------------
+// LIST ---------------------- 1st steps Ford-johnson algorithm Split Pairs List ----------------------
 
 std::list< std::pair<int, int> > splitInPairs(std::list<int> &Array)
 {
@@ -289,41 +280,7 @@ void	sortPairsByLargerValue(std::list< std::pair<int, int> > &pairList, std::siz
 	pairList.insert(it, lastPair);
 }
 
-void	PmergeMe::finalInsertionList(int value)
-{
-	std::list<int>::iterator it = this->_sortList.begin();
-	while (*it < value && it != this->_sortList.end())
-		it++;
-	this->_sortList.insert(it, value);
-}
-
-void	PmergeMe::jackobsthalInsertionList(std::list<int> &pending)
-{
-	std::size_t					sizePending = pending.size();
-	
-	std::list<int>::iterator	index = pending.begin();
-	std::list<int>::iterator	save;
-
-	this->_sortList.insert(this->_sortList.begin(), *index);
-	std::size_t	next_jump = 0;
-	int			cycle = 1;
-	std::size_t pos = 1;
-	while (pos < sizePending)
-	{
-		save = index;
-		next_jump = getJacobsthalNum(static_cast<long int>(cycle)) * 2;
-		for (std::size_t i = pos; i < sizePending && i < pos + next_jump; i++)
-		{
-			index++;
-		}
-		pos += next_jump;
-		for (std::list<int>::iterator it = index; it != save; it--)
-		{
-			finalInsertionList(*it);
-		}
-		cycle++;
-	}
-}
+// LIST ---------------------- 2nd steps Ford-johnson algorithm Sort List ----------------------
 
 std::list<int>	PmergeMe::splitPairContainer(std::list< std::pair<int, int> > &pair)
 {
@@ -339,6 +296,36 @@ std::list<int>	PmergeMe::splitPairContainer(std::list< std::pair<int, int> > &pa
 	return (pending);
 }
 
+void	PmergeMe::finalInsertionList(int value)
+{
+	std::list<int>::iterator it = this->_sortList.begin();
+	while (*it < value && it != this->_sortList.end())
+		it++;
+	this->_sortList.insert(it, value);
+}
+
+void	PmergeMe::jackobsthalInsertionList(std::list<int> &pending)
+{
+	std::size_t					sizePending = pending.size();
+	std::list<int>::iterator	index = pending.begin();
+	std::list<int>::iterator	save;
+
+	this->_sortList.insert(this->_sortList.begin(), *index);
+	std::size_t	next_jump = 0;
+	std::size_t pos = 1;
+	std::size_t	cycle = 1;
+	while (pos < sizePending)
+	{
+		save = index;
+		next_jump = getJacobsthalNum(cycle) * 2;
+		for (std::size_t i = pos; i < sizePending && i < pos + next_jump; i++)
+			index++;
+		for (std::list<int>::iterator it = index; it != save; it--)
+			finalInsertionList(*it);
+		pos += next_jump;
+		cycle++;
+	}
+}
 
 void PmergeMe::mergeInsertionSort(std::list<int> &Array)
 {
@@ -350,33 +337,7 @@ void PmergeMe::mergeInsertionSort(std::list<int> &Array)
 	checkIfOddSize(Array);
 	std::list< std::pair<int, int> > pairList = splitInPairs(Array);
 	sortIndividualPairs(pairList);
-
-
-	// for (std::list< std::pair<int, int> >::iterator it =  pairList.begin(); it != pairList.end(); it++) {
-    //         std::cout << "(" << it->first << ", " << it->second << ") ";
-    //     }
-	// 	if (this->_isTale == true)
-	// 		std::cout << "this->_tale = " << this->_tale;
-    // std::cout << std::endl;
-
-
 	sortPairsByLargerValue(pairList, pairList.size());
-
-
-	// for (std::list< std::pair<int, int> >::iterator it =  pairList.begin(); it != pairList.end(); it++) {
-    //         std::cout << "(" << it->first << ", " << it->second << ") ";
-    //     }
-	// if (this->_isTale == true)
-	// 	std::cout << "this->_tale = " << this->_tale;
-    // std::cout << std::endl;
-
 	std::list<int> pending = splitPairContainer(pairList);
-
-	// std::cout << "sortedlist  = ";
-	// print_container(_sortList);
-	// std::cout << "pendinglist = ";
-	// print_container(pending);
-
 	jackobsthalInsertionList(pending);
 }
-

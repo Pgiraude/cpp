@@ -57,6 +57,8 @@ class PmergeMe
 
 		void mergeInsertionSort(std::vector<int> &Array);
 		void mergeInsertionSort(std::list<int> &Array);
+		int	check_input(int argc, char **argv);
+		void tester(int argc, char **argv);
 		
 
         //-------------------- templates ------------------------
@@ -76,6 +78,8 @@ class PmergeMe
         	}
 			if (container.empty())
 				throw PmergeMe::EmptyContainer();
+			if (container.size() >= 500000)
+				throw PmergeMe::TooMuchValues();
         	return (0);
         }
 
@@ -125,7 +129,7 @@ class PmergeMe
 			public:
 				virtual const char *what() const throw()
 				{
-					return (RED "Error: " RESET "invalid input. Should be a number > 0 and < intmax ");
+					return (RED "Error: " RESET "invalid input. Should be integers between [0;int_max]");
 				}
 		};
 
@@ -134,7 +138,7 @@ class PmergeMe
 			public:
 				virtual const char *what() const throw()
 				{
-					return (RED "Error: " RESET "number > max int");
+					return (RED "Error: " RESET "values must be <= int_max");
 				}
 		};
 
@@ -144,6 +148,15 @@ class PmergeMe
 				virtual const char *what() const throw()
 				{
 					return (RED "Error: " RESET "no value input");
+				}
+		};
+
+		class	TooMuchValues : public std::exception
+		{
+			public:
+				virtual const char *what() const throw()
+				{
+					return (YELLOW "Warning: " RESET "too much values, try with 100000 values");
 				}
 		};
 
